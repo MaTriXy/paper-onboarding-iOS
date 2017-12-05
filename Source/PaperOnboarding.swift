@@ -188,7 +188,7 @@ extension PaperOnboarding: OnboardingContentViewDelegate {
   }
   
   func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
-    (self.delegate as? PaperOnboardingDelegate)?.onboardingConfigurationItem(item, index: index)
+    delegate?.onboardingConfigurationItem(item, index: index)
   }
   
 }
