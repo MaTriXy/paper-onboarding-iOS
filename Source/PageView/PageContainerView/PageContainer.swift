@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PageContrainer: UIView {
+class PageContainer: UIView {
 
     var items: [PageViewItem]?
     let space: CGFloat // space between items
@@ -35,7 +35,7 @@ class PageContrainer: UIView {
 
 // MARK: public
 
-extension PageContrainer {
+extension PageContainer {
 
     func currenteIndex(_ index: Int, duration: Double, animated _: Bool) {
         guard let items = self.items,
@@ -52,7 +52,7 @@ extension PageContrainer {
 
 // MARK: animations
 
-extension PageContrainer {
+extension PageContainer {
 
     fileprivate func animationItem(_ item: PageViewItem, selected: Bool, duration: Double, fillColor: Bool = false) {
         let toValue = selected == true ? selectedItemRadius * 2 : itemRadius * 2
@@ -72,7 +72,7 @@ extension PageContrainer {
 
 // MARK: create
 
-extension PageContrainer {
+extension PageContainer {
 
     fileprivate func createItems(_ count: Int, radius: CGFloat, selectedRadius: CGFloat, itemColor: (Int) -> UIColor) -> [PageViewItem] {
         var items = [PageViewItem]()
@@ -105,11 +105,11 @@ extension PageContrainer {
     }
 
     fileprivate func addConstraintsToView(_ item: UIView, radius: CGFloat) {
-        [NSLayoutAttribute.left, NSLayoutAttribute.centerY].forEach { attribute in
+        [NSLayoutConstraint.Attribute.left, NSLayoutConstraint.Attribute.centerY].forEach { attribute in
             (self, item) >>>- { $0.attribute = attribute; return }
         }
 
-        [NSLayoutAttribute.width, NSLayoutAttribute.height].forEach { attribute in
+        [NSLayoutConstraint.Attribute.width, NSLayoutConstraint.Attribute.height].forEach { attribute in
             item >>>- {
                 $0.attribute = attribute
                 $0.constant = radius * 2.0
@@ -127,7 +127,7 @@ extension PageContrainer {
             $0.constant = space
             return
         }
-        [NSLayoutAttribute.width, NSLayoutAttribute.height].forEach { attribute in
+        [NSLayoutConstraint.Attribute.width, NSLayoutConstraint.Attribute.height].forEach { attribute in
             item >>>- {
                 $0.attribute = attribute
                 $0.constant = radius * 2.0

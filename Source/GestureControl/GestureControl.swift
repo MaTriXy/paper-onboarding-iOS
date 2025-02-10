@@ -9,23 +9,26 @@
 import UIKit
 
 protocol GestureControlDelegate: class {
-    func gestureControlDidSwipe(_ direction: UISwipeGestureRecognizerDirection)
+    func gestureControlDidSwipe(_ direction: UISwipeGestureRecognizer.Direction)
 }
 
-class GestureControl: UIView {
+public class GestureControl: UIView {
 
     weak var delegate: GestureControlDelegate!
+    
+    public private(set) var swipeLeft: UISwipeGestureRecognizer!
+    public private(set) var swipeRight: UISwipeGestureRecognizer!
 
     init(view: UIView, delegate: GestureControlDelegate) {
         self.delegate = delegate
 
         super.init(frame: CGRect.zero)
 
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(GestureControl.swipeHandler(_:)))
+        swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(GestureControl.swipeHandler(_:)))
         swipeLeft.direction = .left
         addGestureRecognizer(swipeLeft)
 
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(GestureControl.swipeHandler(_:)))
+        swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(GestureControl.swipeHandler(_:)))
         swipeRight.direction = .right
         addGestureRecognizer(swipeRight)
 
@@ -34,7 +37,7 @@ class GestureControl: UIView {
 
         view.addSubview(self)
         // add constraints
-        for attribute: NSLayoutAttribute in [.left, .right, .top, .bottom] {
+        for attribute: NSLayoutConstraint.Attribute in [.left, .right, .top, .bottom] {
             (view, self) >>>- {
                 $0.attribute = attribute
                 return

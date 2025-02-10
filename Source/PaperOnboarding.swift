@@ -18,8 +18,10 @@ public struct OnboardingItemInfo {
     public let descriptionColor: UIColor
     public let titleFont: UIFont
     public let descriptionFont: UIFont
+    public let descriptionLabelPadding: CGFloat
+    public let titleLabelPadding: CGFloat
     
-    public init (informationImage: UIImage, title: String, description: String, pageIcon: UIImage, color: UIColor, titleColor: UIColor, descriptionColor: UIColor, titleFont: UIFont, descriptionFont: UIFont) {
+    public init (informationImage: UIImage, title: String, description: String, pageIcon: UIImage, color: UIColor, titleColor: UIColor, descriptionColor: UIColor, titleFont: UIFont, descriptionFont: UIFont, descriptionLabelPadding: CGFloat = 0, titleLabelPadding: CGFloat = 0) {
         self.informationImage = informationImage
         self.title = title
         self.description = description
@@ -29,6 +31,8 @@ public struct OnboardingItemInfo {
         self.descriptionColor = descriptionColor
         self.titleFont = titleFont
         self.descriptionFont = descriptionFont
+        self.descriptionLabelPadding = descriptionLabelPadding
+        self.titleLabelPadding = titleLabelPadding
     }
 }
 
@@ -57,7 +61,7 @@ open class PaperOnboarding: UIView {
 
     fileprivate var fillAnimationView: FillAnimationView?
     fileprivate var pageView: PageView?
-    fileprivate var gestureControl: GestureControl?
+    public fileprivate(set) var gestureControl: GestureControl?
     fileprivate var contentView: OnboardingContentView?
     
     public init(pageViewBottomConstant: CGFloat = 32) {
@@ -201,11 +205,11 @@ extension PaperOnboarding {
 
 extension PaperOnboarding: GestureControlDelegate {
 
-    func gestureControlDidSwipe(_ direction: UISwipeGestureRecognizerDirection) {
+    func gestureControlDidSwipe(_ direction: UISwipeGestureRecognizer.Direction) {
         switch direction {
-        case UISwipeGestureRecognizerDirection.right:
+        case UISwipeGestureRecognizer.Direction.right:
             currentIndex(currentIndex - 1, animated: true)
-        case UISwipeGestureRecognizerDirection.left:
+        case UISwipeGestureRecognizer.Direction.left:
             currentIndex(currentIndex + 1, animated: true)
         default:
             fatalError()

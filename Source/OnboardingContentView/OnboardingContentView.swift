@@ -64,7 +64,7 @@ extension OnboardingContentView {
         view.addSubview(contentView)
 
         // add constraints
-        for attribute in [NSLayoutAttribute.left, NSLayoutAttribute.right, NSLayoutAttribute.top] {
+        for attribute in [NSLayoutConstraint.Attribute.left, NSLayoutConstraint.Attribute.right, NSLayoutConstraint.Attribute.top] {
             (view, contentView) >>>- { $0.attribute = attribute; return }
         }
         (view, contentView) >>>- {
@@ -88,10 +88,10 @@ extension OnboardingContentView {
     fileprivate func createItem(_ index: Int) -> OnboardingContentViewItem {
 
         guard let info = delegate?.onboardingItemAtIndex(index) else {
-            return OnboardingContentViewItem.itemOnView(self)
+            return OnboardingContentViewItem.itemOnView(self, titlePadding: 0, descriptionPadding: 0)
         }
 
-        let item = Init(OnboardingContentViewItem.itemOnView(self)) {
+        let item = Init(OnboardingContentViewItem.itemOnView(self, titlePadding: info.titleLabelPadding, descriptionPadding: info.descriptionLabelPadding)) {
             $0.imageView?.image = info.informationImage
             $0.titleLabel?.text = info.title
             $0.titleLabel?.font = info.titleFont

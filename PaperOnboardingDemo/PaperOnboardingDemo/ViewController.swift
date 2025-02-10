@@ -42,7 +42,7 @@ class ViewController: UIViewController {
 
         setupPaperOnboardingView()
 
-        view.bringSubview(toFront: skipButton)
+        view.bringSubviewToFront(skipButton)
     }
 
     private func setupPaperOnboardingView() {
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         view.addSubview(onboarding)
 
         // Add constraints
-        for attribute: NSLayoutAttribute in [.left, .right, .top, .bottom] {
+        for attribute: NSLayoutConstraint.Attribute in [.left, .right, .top, .bottom] {
             let constraint = NSLayoutConstraint(item: onboarding,
                                                 attribute: attribute,
                                                 relatedBy: .equal,
@@ -83,10 +83,13 @@ extension ViewController: PaperOnboardingDelegate {
         skipButton.isHidden = index == 2 ? false : true
     }
 
-    func onboardingDidTransitonToIndex(_: Int) {
-    }
-
     func onboardingConfigurationItem(_ item: OnboardingContentViewItem, index: Int) {
+        
+        //item.titleCenterConstraint?.constant = 100
+        //item.descriptionCenterConstraint?.constant = 100
+        
+        // configure item
+        
         //item.titleLabel?.backgroundColor = .redColor()
         //item.descriptionLabel?.backgroundColor = .redColor()
         //item.imageView = ...
@@ -119,9 +122,9 @@ extension ViewController: PaperOnboardingDataSource {
 
 
 //MARK: Constants
-extension ViewController {
+private extension ViewController {
     
-    private static let titleFont = UIFont(name: "Nunito-Bold", size: 36.0) ?? UIFont.boldSystemFont(ofSize: 36.0)
-    private static let descriptionFont = UIFont(name: "OpenSans-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)
+    static let titleFont = UIFont(name: "Nunito-Bold", size: 36.0) ?? UIFont.boldSystemFont(ofSize: 36.0)
+    static let descriptionFont = UIFont(name: "OpenSans-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)
 }
 
